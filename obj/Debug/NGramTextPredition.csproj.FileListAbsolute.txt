@@ -1,0 +1,9 @@
+C:\Users\vectaa\source\repos\NGramTextPredition\bin\Debug\NGramTextPredition.exe.config
+C:\Users\vectaa\source\repos\NGramTextPredition\bin\Debug\NGramTextPredition.exe
+C:\Users\vectaa\source\repos\NGramTextPredition\bin\Debug\NGramTextPredition.pdb
+C:\Users\vectaa\source\repos\NGramTextPredition\obj\Debug\NGramTextPredition.csprojAssemblyReference.cache
+C:\Users\vectaa\source\repos\NGramTextPredition\obj\Debug\NGramTextPredition.Form1.resources
+C:\Users\vectaa\source\repos\NGramTextPredition\obj\Debug\NGramTextPredition.Properties.Resources.resources
+C:\Users\vectaa\source\repos\NGramTextPredition\obj\Debug\NGramTextPredition.csproj.GenerateResource.cache
+C:\Users\vectaa\source\repos\NGramTextPredition\obj\Debug\NGramTextPredition.exe
+C:\Users\vectaa\source\repos\NGramTextPredition\obj\Debug\NGramTextPredition.pdb
