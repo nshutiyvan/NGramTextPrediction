@@ -15,7 +15,19 @@ namespace NGramTextPredition
         {
             childeren = new List<Gram>();
             parent = s;
-            counter = 0;
+            counter = 1;
+        }
+        public int getCounter()
+        {
+            return counter;
+        }
+        public void increaseCounter()
+        {
+            this.counter++;
+        }
+        public void increaseCounter(int n)
+        {
+            this.counter += n;
         }
         public Gram getHead()
         {
@@ -30,7 +42,30 @@ namespace NGramTextPredition
         {
             if(this.getParent() == n.getParent())
             {
-                this.counter++;
+                Gram  newG= n;
+             
+                this.increaseCounter(newG.getCounter());
+                //this.childeren.Add(newG);
+               
+               
+                foreach(Gram oldChild in childeren)
+                {
+                    foreach(Gram newChild in newG.GetChildren())
+                    {                     
+                        if (oldChild.getParent() == newChild.getParent())
+                        {
+                            //List<Gram> tempList = oldChild.GetChildren();
+                            Gram temp = oldChild;
+                            temp.increaseCounter(newChild.getCounter());
+                            this.childeren.Remove(oldChild);
+                            this.childeren.Add(temp);
+                        }
+                    }
+                    
+                }
+               
+                
+                
 
             }
             else
