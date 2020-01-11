@@ -43,29 +43,31 @@ namespace NGramTextPredition
             return parent;
         }
         public void buildTree(List<string> words)
-        {   
-            if(words.Count > 0)
+        {
+            if (words.Count > 0)
             {
                 string first = words.FirstOrDefault();
-                words.RemoveAt(0);
+                //words.RemoveAt(0);
                 Gram2 child = new Gram2(first);
                 Gram2 start = isExist(child);
                 if (start == null)
                 {
+                    
                     child.buildTree(words);
                     childeren.Add(child);
 
                 }
                 else
                 {
+
                     start.increaseCounter();
-                    if (words.Count > 1)
+                    if (words.Count > 0)
                     {
-                       start.buildTree(words);
+                        start.buildTree(words);
                     }
                 }
             }
-                             
+
 
         }      
        private Gram2 isExist(Gram2 newParent)

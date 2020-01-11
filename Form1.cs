@@ -90,6 +90,7 @@ namespace NGramTextPredition
                         }
 
                     }
+                    int a = 1;
                     start.buildTree(block);
 
                 }
