@@ -47,7 +47,7 @@ namespace NGramTextPredition
             if (words.Count > 0)
             {
                 string first = words.FirstOrDefault();
-                //words.RemoveAt(0);
+                words.RemoveAt(0);
                 Gram2 child = new Gram2(first);
                 Gram2 start = isExist(child);
                 if (start == null)
