@@ -71,7 +71,7 @@ namespace NGramTextPredition
                     {
                         string writeString = String.Format("node{0} -- node{1}\n",p.getID(),g.getID());
                         w.WriteLine(writeString);
-                        writeString = String.Format("node{0} [ label = \"{1}\" ]\n", g.getID(), g.getParent() + "\n" + g.getCounter());
+                        writeString = String.Format("node{0} [ label = \"{1}\" ]\n", g.getID(), g.getParent() + "\nC:" + g.getCounter()+"\nP:"+g.getProbability());
                         w.WriteLine(writeString);
                         addNodeToGraph(w, g,g.getID());
                         //parentInt = childInt;

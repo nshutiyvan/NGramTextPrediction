@@ -21,7 +21,7 @@ namespace NGramTextPredition
             parent = s;
             childeren = new List<Gram2>();
             numberOfChild = nChild;
-            probability = 0.0;
+            probability = 0F;
             myId = val;
             rand = rt;
 
@@ -93,17 +93,51 @@ namespace NGramTextPredition
             }         
 
         }
-        public void setStatistics()
+        public double getProbability()
+        {
+            return this.probability;
+        }
+        public void setProbability(double val)
+        {
+
+            this.probability = Math.Round((Double)val, 2);
+        }
+        public void calcStatistics()
         {
             foreach(Gram2 g in childeren)
             {
-                g.setProbability(this);
+                
+                double gCount = g.getCounter();
+                double totalCount = this.getChildrenCount();
+                g.setProbability(gCount / totalCount);
+                
+                setChildProbability(g);
+                
             }
         }
-        private void setProbability(Gram2 head)
+        private void setChildProbability(Gram2 head)
         {
-            this.probability = this.getCounter() / head.getCounter();
+
+            foreach (Gram2 g in head.GetChildren())
+            {
+                double gCount = g.getCounter();
+                double totalCount = head.getChildrenCount();
+                g.setProbability(gCount / totalCount);
+                setChildProbability(g);
+            }
+
         }
+        public int getChildrenCount()
+        {
+            int total = 0;
+            foreach (Gram2 g in childeren)
+            {
+                total += g.getCounter();
+
+            }
+            return total;
+        }
+        
        private Gram2 isExist(Gram2 newParent)
        {
            foreach (Gram2 g in childeren)

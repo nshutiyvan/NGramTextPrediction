@@ -33,7 +33,7 @@ namespace NGramTextPredition
             getNGrams(nGram, nBranches);
             string result = "";
             printHistogram(start);
-            start.setStatistics();
+            start.calcStatistics();
             Canvas cm = new Canvas(start);
             cm.generateTree();
             
