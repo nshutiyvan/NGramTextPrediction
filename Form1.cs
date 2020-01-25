@@ -4,16 +4,18 @@ using System.Windows.Forms;
 
 namespace NGramTextPredition
 {
+    
     public partial class Form1 : Form
     {
         List<String> words = new List<string>();
-        //List<Gram> grams = new List<Gram>();
         Gram2 start = null;
+        public long globalId = 0;
+        Random rand;
         public Form1()
         {
             InitializeComponent();
+            rand = new Random();
         }
-
         private void btnStart_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Debug.WriteLine("");
@@ -22,11 +24,19 @@ namespace NGramTextPredition
             System.Diagnostics.Debug.WriteLine("");
             System.Diagnostics.Debug.WriteLine("Manipulated:");
             System.Diagnostics.Debug.Write(removeDirty(txtInput.Text));
+
+            int nGram = int.Parse(numDepth.Text);
+            int nBranches = int.Parse(numChild.Text);
+
             wordTokenizer(removeDirty(txtInput.Text));
             printWordsGot();
-            getNGrams(3);
-
+            getNGrams(nGram, nBranches);
             string result = "";
+            printHistogram(start);
+            start.setStatistics();
+            Canvas cm = new Canvas(start);
+            cm.generateTree();
+            
 
         }
         private string removeDirty(string toCleanArray)
@@ -66,9 +76,27 @@ namespace NGramTextPredition
                 System.Diagnostics.Debug.Write(s);
             }          
         }
-        private void getNGrams(int nGram)
+        private void buildHistTree(Gram2 head)
         {
-            start = new Gram2("");           
+            int count = 0;
+            foreach(Gram2 child in head.GetChildren())
+            {
+                System.Diagnostics.Debug.WriteLine("1: \t");
+                System.Diagnostics.Debug.Write(child.getCounter());
+                buildHistTree(child);
+            }
+        }
+        private void printHistogram(Gram2 head)
+        {
+            System.Diagnostics.Debug.WriteLine("------------------------Histogram----------------------");
+            buildHistTree(head);
+            System.Diagnostics.Debug.WriteLine("------------------------Close histogram----------------------");
+           
+            
+        }
+        private void getNGrams(int nGram,int nBranches)
+        {
+            start = new Gram2("", nBranches,0,ref rand);           
             
             for (int i = 0; i < words.Count - (nGram); i++)
             {
@@ -90,78 +118,12 @@ namespace NGramTextPredition
                         }
 
                     }
-                    int a = 1;
                     start.buildTree(block);
-
+                    
                 }
             }
 
-        }
-
-        /*
-        /*
-        private void getNGrams(int nGram)
-        {
-            for (int i = 0; i < words.Count - (nGram); i++)
-            {
-                string s = words[i];
-                if (s == "")
-                {
-                    i++;
-                }
-                else
-                {
-                    Gram temp = new Gram(s);
-                    Gram n = isExist(temp);
-                    if (n != null)
-                    {
-                        temp = n;
-                        for (int j = 1; j < (nGram); j++)
-                        {
-                            if (words[i + j] != "")
-                            {
-                                s = words[i + j];
-                                Gram k = new Gram(s);
-                                n.addChildren(k);
-                            }
-
-                        }
-                        int b = 0;
-                        grams.Remove(temp);
-                        grams.Add(n);
-                    }
-                    else
-                    {\
-                        for (int j = 1; j < (nGram); j++)
-                        {
-                            if (words[i + j] != "")
-                            {
-                                s = words[i + j];
-                                Gram k = new Gram(s);
-                                temp.addChildren(k);
-                            }
-
-                        }
-                        grams.Add(temp);
-                    }
-
-                }
-            }
-        }
-        */
-        /*
-        private Gram isExist(Gram n)
-        {
-            foreach (Gram g in grams)
-            {
-                if (g.getParent() == n.getParent())
-                {
-                    return g;
-                    int a = 4;
-                }
-            }
-            return null;
-        }*/
+        }       
         
     }
 }

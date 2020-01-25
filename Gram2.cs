@@ -9,17 +9,30 @@ namespace NGramTextPredition
     class Gram2
     {
         List<Gram2> childeren;
+        int numberOfChild;
         int counter;
         string parent;
-        public Gram2(string s)
+        double probability;
+        long myId=0;
+        Random rand;
+        public Gram2(string s,int nChild,long val,ref Random rt)
         {
             counter = 1;
             parent = s;
             childeren = new List<Gram2>();
+            numberOfChild = nChild;
+            probability = 0.0;
+            myId = val;
+            rand = rt;
+
         }
         public int getCounter()
         {
             return counter;
+        }
+        public long getId()
+        {
+            return myId;
         }
         public void increaseCounter()
         {
@@ -38,38 +51,59 @@ namespace NGramTextPredition
 
             return childeren;
         }
-        private string getParent()
+        public string getParent()
         {
             return parent;
         }
+        public void setID(long id)
+        {
+            myId = id;
+        }
+        public long getID()
+        {
+            return myId;
+        }
         public void buildTree(List<string> words)
         {
-            if (words.Count > 0)
+            if(childeren.Count < numberOfChild)
             {
-                string first = words.FirstOrDefault();
-                words.RemoveAt(0);
-                Gram2 child = new Gram2(first);
-                Gram2 start = isExist(child);
-                if (start == null)
+                if (words.Count > 0)
                 {
-                    
-                    child.buildTree(words);
-                    childeren.Add(child);
-
-                }
-                else
-                {
-
-                    start.increaseCounter();
-                    if (words.Count > 0)
+                    string first = words.FirstOrDefault();
+                    words.RemoveAt(0);
+                    int random = rand.Next();
+                    Gram2 child = new Gram2(first, numberOfChild,random,ref rand);
+                    Gram2 start = isExist(child);
+                    if (start == null)
                     {
-                        start.buildTree(words);
+
+                        child.buildTree(words);                     
+                        childeren.Add(child);
+                    }
+                    else
+                    {
+
+                        start.increaseCounter();
+                        if (words.Count > 0)
+                        {
+                            start.buildTree(words);
+                        }
                     }
                 }
+            }         
+
+        }
+        public void setStatistics()
+        {
+            foreach(Gram2 g in childeren)
+            {
+                g.setProbability(this);
             }
-
-
-        }      
+        }
+        private void setProbability(Gram2 head)
+        {
+            this.probability = this.getCounter() / head.getCounter();
+        }
        private Gram2 isExist(Gram2 newParent)
        {
            foreach (Gram2 g in childeren)

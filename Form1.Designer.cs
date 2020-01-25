@@ -30,13 +30,13 @@
         {
             this.btnStart = new System.Windows.Forms.Button();
             this.txtInput = new System.Windows.Forms.TextBox();
+            this.numChild = new System.Windows.Forms.NumericUpDown();
             this.numDepth = new System.Windows.Forms.NumericUpDown();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.resultTxt = new System.Windows.Forms.TextBox();
+            ((System.ComponentModel.ISupportInitialize)(this.numChild)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numDepth)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // btnStart
@@ -57,28 +57,28 @@
             this.txtInput.Size = new System.Drawing.Size(339, 335);
             this.txtInput.TabIndex = 1;
             // 
+            // numChild
+            // 
+            this.numChild.Location = new System.Drawing.Point(97, 49);
+            this.numChild.Name = "numChild";
+            this.numChild.Size = new System.Drawing.Size(75, 20);
+            this.numChild.TabIndex = 2;
+            // 
             // numDepth
             // 
-            this.numDepth.Location = new System.Drawing.Point(77, 47);
+            this.numDepth.Location = new System.Drawing.Point(97, 21);
             this.numDepth.Name = "numDepth";
-            this.numDepth.Size = new System.Drawing.Size(120, 20);
-            this.numDepth.TabIndex = 2;
-            // 
-            // numericUpDown1
-            // 
-            this.numericUpDown1.Location = new System.Drawing.Point(276, 23);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(75, 20);
-            this.numericUpDown1.TabIndex = 3;
+            this.numDepth.Size = new System.Drawing.Size(75, 20);
+            this.numDepth.TabIndex = 3;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(172, 25);
+            this.label1.Location = new System.Drawing.Point(12, 23);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(88, 13);
+            this.label1.Size = new System.Drawing.Size(43, 13);
             this.label1.TabIndex = 4;
-            this.label1.Text = "#Number of child";
+            this.label1.Text = "#Depth";
             // 
             // label2
             // 
@@ -105,14 +105,14 @@
             this.Controls.Add(this.resultTxt);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.numDepth);
+            this.Controls.Add(this.numChild);
             this.Controls.Add(this.txtInput);
             this.Controls.Add(this.btnStart);
             this.Name = "Form1";
             this.Text = "Form1";
+            ((System.ComponentModel.ISupportInitialize)(this.numChild)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numDepth)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -122,8 +122,8 @@
 
         private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.TextBox txtInput;
+        private System.Windows.Forms.NumericUpDown numChild;
         private System.Windows.Forms.NumericUpDown numDepth;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox resultTxt;
