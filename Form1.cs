@@ -10,11 +10,16 @@ namespace NGramTextPredition
         List<String> words = new List<string>();
         Gram2 start = null;
         public long globalId = 0;
-        Random rand;
+        Random rand,childRand;
+        string resultString;
+        Gram2 selectedG = null;
+        
         public Form1()
         {
             InitializeComponent();
             rand = new Random();
+            childRand = new Random();
+            resultString = "";
         }
         private void btnStart_Click(object sender, EventArgs e)
         {
@@ -36,6 +41,10 @@ namespace NGramTextPredition
             start.calcStatistics();
             Canvas cm = new Canvas(start);
             cm.generateTree();
+            if(start != null)
+            {
+                selectedG = start;
+            }
             
 
         }
@@ -123,7 +132,46 @@ namespace NGramTextPredition
                 }
             }
 
-        }       
-        
+        }
+
+        private void btnGenerate_Click(object sender, EventArgs e)
+        {
+            
+            if(start != null)
+            {
+               
+                getNRandChild(selectedG);
+
+            }
+            
+        }
+        private void getNRandChild(Gram2 g)
+        {
+            Gram2 randomG = generateRandomChild(g);
+            if(randomG != null)
+            {
+                resultString += " " + randomG.getParent();
+                resultTxt.Text = resultString;
+                selectedG = randomG;
+            }
+            else
+            {
+                randomG = start.isExist(g);
+                if(randomG != null)
+                {
+                    selectedG = randomG;
+                }
+                else
+                {
+                    selectedG = start;
+                }
+            }
+            
+        }
+        private Gram2 generateRandomChild(Gram2 g)
+        {
+            return g.getRandomChild(ref childRand);
+        }
+       
     }
 }

@@ -35,6 +35,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.resultTxt = new System.Windows.Forms.TextBox();
+            this.btnGenerate = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numChild)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numDepth)).BeginInit();
             this.SuspendLayout();
@@ -97,11 +98,22 @@
             this.resultTxt.Size = new System.Drawing.Size(339, 335);
             this.resultTxt.TabIndex = 6;
             // 
+            // btnGenerate
+            // 
+            this.btnGenerate.Location = new System.Drawing.Point(655, 38);
+            this.btnGenerate.Name = "btnGenerate";
+            this.btnGenerate.Size = new System.Drawing.Size(89, 31);
+            this.btnGenerate.TabIndex = 7;
+            this.btnGenerate.Text = "Generate";
+            this.btnGenerate.UseVisualStyleBackColor = true;
+            this.btnGenerate.Click += new System.EventHandler(this.btnGenerate_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.btnGenerate);
             this.Controls.Add(this.resultTxt);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -127,6 +139,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox resultTxt;
+        private System.Windows.Forms.Button btnGenerate;
     }
 }
 

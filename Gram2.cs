@@ -13,8 +13,12 @@ namespace NGramTextPredition
         int counter;
         string parent;
         double probability;
+        double lowerBound;
+        double upperBound;
         long myId=0;
         Random rand;
+       
+        Gram2 lastSelectedChild;
         public Gram2(string s,int nChild,long val,ref Random rt)
         {
             counter = 1;
@@ -26,6 +30,7 @@ namespace NGramTextPredition
             rand = rt;
 
         }
+       
         public int getCounter()
         {
             return counter;
@@ -138,7 +143,7 @@ namespace NGramTextPredition
             return total;
         }
         
-       private Gram2 isExist(Gram2 newParent)
+       public Gram2 isExist(Gram2 newParent)
        {
            foreach (Gram2 g in childeren)
            {
@@ -149,6 +154,68 @@ namespace NGramTextPredition
            }
            return null;
        }
+        public void setLowerBound(double val)
+        {
+            lowerBound = val;
+        }
+        public void setUpperBound(double val)
+        {
+            upperBound = val;
+        }
+        public double getLowerBound()
+        {
+            return lowerBound;
+        }
+        public double getUpperBound()
+        {
+            return upperBound;
+        }
+        public Gram2 getRandomChild(ref Random randChild)
+        {
+            double randVal = randChild.NextDouble();
+            this.setBound();
+            Gram2 child = getChildInBound(randVal);
+            if (child == null)
+                child = null;             
+            return child;
+        }
+        private Gram2 getChildInBound(double randVal)
+        {
+            foreach(Gram2 g in this.GetChildren())
+            {
+                if (g.getLowerBound() < randVal && g.getUpperBound() > randVal)
+                {
+                    g.setLastSelectedRandChild(this);
+                    return g;
+                }
+                    
+            }
+            return null;
+        }
+        private void setLastSelectedRandChild(Gram2  g)
+        {
+            lastSelectedChild = g;
+        }
+        public Gram2 getLastSelectedRandChild()
+        {
+            return lastSelectedChild;
+        }
+        private void setBound()
+        {
+            double lowerLimit = 0.00;
+            foreach(Gram2 g in this.GetChildren())
+            {
+                setChildrenBound(g,lowerLimit);
+                lowerLimit = g.getUpperBound();
+            }
+        }
+        private void setChildrenBound(Gram2 g,double lowerLimit)
+        {
+            double lower = lowerLimit;
+            double upper = lowerLimit + g.getProbability();
+            g.setLowerBound(lower);
+            g.setUpperBound(upper);
+        }
         public override string ToString()
         {
             string s = parent;
