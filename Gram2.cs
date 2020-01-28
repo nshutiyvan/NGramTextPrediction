@@ -142,7 +142,10 @@ namespace NGramTextPredition
             }
             return total;
         }
-        
+        public int getNOfChildren()
+        {
+            return this.GetChildren().Count();
+        }
        public Gram2 isExist(Gram2 newParent)
        {
            foreach (Gram2 g in childeren)
