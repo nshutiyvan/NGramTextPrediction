@@ -37,15 +37,62 @@ namespace NGramTextPredition
             printWordsGot();
             getNGrams(nGram, nBranches);
             string result = "";
-            printHistogram(start);
+           
             start.calcStatistics();
             Canvas cm = new Canvas(start);
             cm.generateTree();
             if(start != null)
             {
                 selectedG = start;
+                List<double[]> histogram=makeHistogram(nGram);
+                printHistogram(histogram,nGram,nBranches);
             }
             
+
+        }
+        private void printHistogram(List<double[]> histogram,int depth,int branches)
+        {
+            double[] row = new double[histogram.Count];
+            int index = 0;
+            string s = "" + (index + 1) + "|";
+            System.Diagnostics.Debug.WriteLine("");
+
+            for (int i = 1; i <= branches; i++)
+            {
+                System.Diagnostics.Debug.Write("\t"+i);
+            }
+            System.Diagnostics.Debug.WriteLine("");
+            for (double i = 0; i < histogram.Count / 2; i++)
+            {
+                System.Diagnostics.Debug.Write("---------");
+            }
+            
+            while (index < depth)
+            {
+                foreach (double[] d in histogram)
+                {
+                    for (int i = 0; i < d.Length; i++)
+                    {
+                        if (i == index)
+                        {
+                            s += "\t" + d[i];
+                            break;
+                        }
+                    }
+
+                }
+                s+="|";
+                System.Diagnostics.Debug.WriteLine("");
+                System.Diagnostics.Debug.WriteLine(s);
+                for (double i = 0; i < histogram.Count / 2; i++)
+                {
+                    System.Diagnostics.Debug.Write("---------");
+                }
+                s = "";
+                index++;
+                s = ""+(index+1)+"|";
+                
+            }     
 
         }
         private string removeDirty(string toCleanArray)
@@ -95,14 +142,7 @@ namespace NGramTextPredition
                 buildHistTree(child);
             }
         }
-        private void printHistogram(Gram2 head)
-        {
-            System.Diagnostics.Debug.WriteLine("------------------------Histogram----------------------");
-            buildHistTree(head);
-            System.Diagnostics.Debug.WriteLine("------------------------Close histogram----------------------");
-           
-            
-        }
+        
         private void getNGrams(int nGram,int nBranches)
         {
             start = new Gram2("", nBranches,0,ref rand);           
@@ -144,6 +184,65 @@ namespace NGramTextPredition
 
             }
             
+        }
+        private List<double[]> makeHistogram(int depth)
+        {
+            if(start != null)
+            {
+                /*
+                int index = 1;
+                System.Diagnostics.Debug.WriteLine("------------------------Histogram----------------------");
+                System.Diagnostics.Debug.Write(" "+index+"|");
+                */
+                int index = 0;
+                List<double[]> opa = new List<double[]>();
+                foreach (Gram2 g in start.GetChildren())
+                {
+                    double[] data = new double[depth];
+                    data[index] = g.getCounter();
+                    
+                    getNHistogram(g, index, depth-1,ref data);
+                   
+                    opa.Add(data);
+                }
+                return opa;
+            }
+            return null;
+        }
+        private void getNHistogram(Gram2 head,int index,int depth,ref double[] data)
+        {
+            /*
+            while(index <= depth)
+            {
+
+                index++;
+                int counter = 0;
+                foreach (Gram2 g in head.GetChildren())
+                {                   
+                    getNHistogram(g, index, depth, ref data);
+                    counter += g.getChildrenCount();
+                }
+                data[index] = counter;
+            }
+            */
+            int counter = 0;
+            if(index < depth)
+            {
+                data[index] = counter;             
+            }
+            else
+            {
+                index++;
+                foreach (Gram2 g in head.GetChildren())
+                {
+
+                   counter +=g.getChildrenCount();
+                    getNHistogram(g, index, depth, ref data);
+
+                }
+            }
+
+
         }
         private void getNRandChild(Gram2 g)
         {

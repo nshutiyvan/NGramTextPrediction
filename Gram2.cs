@@ -216,6 +216,7 @@ namespace NGramTextPredition
             g.setLowerBound(lower);
             g.setUpperBound(upper);
         }
+        
         public override string ToString()
         {
             string s = parent;
