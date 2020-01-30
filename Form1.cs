@@ -32,8 +32,12 @@ namespace NGramTextPredition
 
             int nGram = int.Parse(numDepth.Text);
             int nBranches = int.Parse(numChild.Text);
-
-            wordTokenizer(removeDirty(txtInput.Text));
+            if(nBranches == 0)
+            {
+                nBranches = 100;
+            }
+            string s = removeDirty(txtInput.Text);
+            wordTokenizer(s);
             printWordsGot();
             getNGrams(nGram, nBranches);
             string result = "";
@@ -75,22 +79,27 @@ namespace NGramTextPredition
                 {
                     result += Char.ToLower(c);
                 }
-                else
-                {
-                    result +=" ";
-                }              
+                else {
+                    result += " ";
+                }
+                              
 
             }
             return result;
 
         }
+        
         private void wordTokenizer(string passage)
         {
 
             string[] tokens = passage.Split(' ');
             foreach(string s in tokens)
             {
-                words.Add(s);
+                if(s != "")
+                {
+                    words.Add(s);
+                }
+                
             }
         }
         private void printWordsGot()
@@ -121,25 +130,14 @@ namespace NGramTextPredition
             {
                 List<string> block = new List<string>();
                 string s = words[i];
-                if (s == "")
+                block.Add(s);
+               
+                for (int j = 1; j < nGram; j++)
                 {
-                    i++;
-                }
-                else
-                {
+                    s = words[i + j];
                     block.Add(s);
-                    for (int j = 1; j < (nGram); j++)
-                    {
-                        if (words[i + j] != "")
-                        {
-                            s = words[i + j];
-                            block.Add(s);
-                        }
-
-                    }
-                    start.buildTree(block);
-                    
                 }
+                start.buildTree(block);
             }
 
         }
